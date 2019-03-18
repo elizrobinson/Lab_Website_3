@@ -235,38 +235,38 @@ app.get('/player_info', function(req, res) {
   })
 });
 
-// app.get('/player_info/post', function(req, res) {
-//   var player_id = req.query.player_choice;
-//   var query_id_name = 'select name, id from football_players;';
-//   var query_player_info = "SELECT * FROM football_players WHERE id = '" + player_id + "';";
-//   var num_games = "SELECT COUNT(*) as num_games FROM football_games WHERE '"+ player_id +"'=ANY(players);"; 
+app.get('/player_info/post', function(req, res) {
+  var player_id = req.query.player_choice;
+  var query_id_name = 'select name, id from football_players;';
+  var query_player_info = "SELECT * FROM football_players WHERE id = '" + player_id + "';";
+  var num_games = "SELECT COUNT(*) FROM football_games WHERE '"+ player_id +"'=ANY(players);"; 
 
-//   db.task('get-everything', task => {
-//         return task.batch([
-//             task.any(query_id_name),
-//             task.any(query_player_info),
-//             task.any(num_games)
-//         ]);
-//     })
-//     .then(info => {
-//       res.render('pages/player_info',{
-//         my_title: "Player Page",
-//         names_ids: info[0],
-//         player_information: info[1][0],
-//         num_games: info[2][0].count
-//       })
-//     })
-//     .catch(error => {
-//         // display error message in case an error
-//         request.flash('error', err);
-//         response.render('pages/player_info', {
-//             title: 'Player Page',
-//             names_ids: '',
-//             player_information: '',
-//             num_games: ''
-//         })
-//     });
-// });
+  db.task('get-everything', task => {
+        return task.batch([
+            task.any(query_id_name),
+            task.any(query_player_info),
+            task.any(num_games)
+        ]);
+    })
+    .then(info => {
+      res.render('pages/player_info',{
+        my_title: "Player Page",
+        data: info[0],
+        player_information: info[1][0],
+        num_games: info[2][0].count
+      })
+    })
+    .catch(error => {
+        // display error message in case an error
+        request.flash('error', err);
+        response.render('pages/player_info', {
+            title: 'Player Page',
+            data: '',
+            player_information: '',
+            num_games: ''
+        })
+    });
+});
 
 app.listen(3000);
 console.log('3000 is the magic port');

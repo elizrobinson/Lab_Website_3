@@ -6,30 +6,28 @@
 			<div class="col-4">
 				<div class="card">
 				<!-- TODO: Modify the ejs code below, to conditionally set the image_src to be from our chosen player -->
-				<% 
-					var image_src = '../resources/img/helmet.jpg';
-				%>
+				<% var image_src = '../resources/img/helmet.jpg';%>
+				<%
+				if(player_information){
+					image_src = player_information.img_src;
+				}%>
 				<img class="card-img-top" id="player_img" src= "<%- image_src %>" alt="Image of Football Player">
 				<div class="card-body mx-auto">
 					<form class="form" action="/player_info/post" method="get">
 						<select class="custom-select" name="player_choice" onchange="this.form.submit()">
 							<option selected>Select Player</option>
-							<!-- TODO: Populate our select with player options
-							 			For each player, set a new option with a value matching the palyer's id, 
-							 			but will display the player's name -->
-							<form action="/player_info" method="get">
 							<% 
+							var rows ='';
 							if (data) { 
-							    var rows ='';
 								data.forEach(function(item){
 							  		rows += '<option value="'+item.id+'"> '+item.name+'</option>';
-							  	 }); %>
-							  	 <%-rows%> 
-							<% } %>
-							</form>
+							  	 });
+							}
+							%>
+							<%-rows%> 
 						</select>
 					</form>
-				  </div>
+				</div>
 				</div>
 			</div>
 			<div class="col-8">
@@ -37,32 +35,103 @@
 					<table class="table">
 						<tr>
 							<th>Year</th>
-							<td></td>
+							<td>
+								<%
+								var year = '';
+								if(player_information){
+									year = player_information.year;
+								}
+								%>
+								<%-year%>
+							</td>
 						</tr>
 						<tr>
 							<th>Major</th>
-							<td></td>
+							<td>
+								<%
+								var major = '';
+								if(player_information){
+									major = player_information.major;
+								}
+								%>
+								<%-major%>
+							</td>
 						</tr>
 						<tr>
 							<th>Games Played</th>
-							<td></td>
+							<td>
+								<%
+								var games_played = '';
+								if(num_games){
+									games_played = num_games;
+								}
+								%>
+								<%-games_played%>
+							</td>
 						</tr>
 						<tr>
-							<td>Passing Yards: </td>
-							<td>Avg. Passing Yards: </td>
+							<td>Passing Yards: 
+								<%
+								var passing = '';
+								if(player_information){
+									passing = player_information.passing_yards;
+								}
+								%>
+								<%-passing%>
+							</td>
+							<td>Avg. Passing Yards: 
+								<%
+								var avg_passing = '';
+								if(player_information){
+									avg_passing = player_information.passing_yards/num_games;
+								}
+								%>
+								<%-avg_passing%>
+							</td>
 						</tr>
 						<tr>
-							<td>Rushing Yards: </td>
-							<td>Avg. Rushing Yards: </td>
+							<td>Rushing Yards: 
+								<%
+								var rushing = '';
+								if(player_information){
+									rushing = player_information.rushing_yards;
+								}
+								%>
+								<%-rushing%>
+							</td>
+							<td>Avg. Rushing Yards: 
+								<%
+								var avg_rushing = '';
+								if(player_information){
+									avg_rushing = player_information.rushing_yards/num_games;
+								}
+								%>
+								<%-avg_rushing%>
+							</td>
 						</tr>
 						<tr>
-							<td>Receiving Yards: </td>
-							<td>Avg. Receiving Yards: </td>
+							<td>Receiving Yards: 
+								<%
+								var receiving = '';
+								if(player_information){
+									receiving = player_information.receiving_yards;
+								}
+								%>
+								<%-receiving%>
+							</td>
+							<td>Avg. Receiving Yards: 
+								<%
+								var avg_receiving = '';
+								if(player_information){
+									avg_receiving = player_information.receiving_yards/num_games;
+								}
+								%>
+								<%-avg_receiving%>
+							</td>
 						</tr>
 					</table>
 				</div>
 			</div>
 		</div>
 	</div>
-  
 <% include ../partials/footer %>
