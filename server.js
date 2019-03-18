@@ -221,7 +221,9 @@ app.get('/player_info', function(req, res) {
   .then(function (rows) {
     res.render('pages/player_info',{
       my_title: "Player Page",
-      data: rows
+      data: rows,
+      player_information: '',
+      num_games: ''
     })
   })
 
@@ -230,7 +232,9 @@ app.get('/player_info', function(req, res) {
     request.flash('error', err);
     response.render('pages/player_info', {
         title: 'Player Page',
-        data: ''
+        data: '',
+        player_information: '',
+        num_games: ''
     })
   })
 });
